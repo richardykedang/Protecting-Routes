@@ -1,3 +1,4 @@
+const {promisify} = require('util');
 const jwt = require('jsonwebtoken');
 const User = require('../Model/userModel');
 const catchAsync = require('../utils/catchAsync');
@@ -63,11 +64,22 @@ exports.protect = catchAsync(async (req,res,next) => {
     if(!token)
     return next(new AppError('You are Not Login, Please Login to get the Access', 401));
     //2 verify token
-   
+    const decode = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    console.log(decode);
     //3 check if user still exist
-    
+    const freshUser = await User.findById(decode.id);
+    if(!freshUser) {
+        return next (
+            new AppError('The User no longer exist', 401)
+        )
+    }
     //4 check if user changed password
+    if(freshUser.changedPasswordAfter(decode.iat)) {
+        return next(new AppError('User recently changed password!, please login again', 401))
+    }
 
+    //grant access to protected route
+    req.user = freshUser
     next();
 
 });
