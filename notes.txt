@@ -1,0 +1,39 @@
+- init json package manager = npm init
+- automatically restart server using nodemon = npm install --save-dev nodemon
+  after nodemon installation open json package and change start script into "nodemon server.js" 
+  and running our server automatically use "nodemon start"
+- install express = npm install express --save
+- install middleware = npm install morgan --save
+-.Using 3rd-party middleware/ morgan yg berfungsi sebagai logger / menyediakan informasi setiap kali ada request yg masuk ke server
+
+-. membuat route and subroute/ modular menggunakan route  express tujuannya untuk membantu membagi applikasi menjadi submodul, agar lebih terstruktur dan lebih rapi
+ *call express router
+ *use router middleware to route the module
+
+-.refactoring file structure :
+ *create new folder name route
+ *create tourRoute file and cut all the route handlers and route into tourfile
+
+-.move route handler into controller
+ *create new controller folder
+ *make new TourController file and cut all the route handler into tourController
+ *export all the function into module 
+ *import the module from controller
+
+-.create separate server into one file
+
+-.create module for checkID : 
+ *create new check id function and parse into mindleware
+ *call that function use router.param(param, function_name)
+
+-.create module for checkbody
+ *create new check id function and parse into mindleware
+ *call that function into post body
+
+-.instal the enviroment = npm install dotenv --save
+-.import data = node dev-data/data/import-dev-data.js --import
+-.delete data = node dev-data/data/import-dev-data.js --delete
+
+-.npm install validator
+-.npm install bcrypt atau npm install bcryptjs
+-.npm install jsonwebtoken
